@@ -1,0 +1,4 @@
+train_log/
+script/
+__pycache__/
+model-backup/
