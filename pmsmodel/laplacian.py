@@ -53,12 +53,11 @@ def laplacian_pyramid(img, kernel, max_levels=3):
     return pyr
 
 class LapLoss(torch.nn.Module):
-    def __init__(self, max_levels=5, channels=3):
+    def __init__(self, channels=3):
         super(LapLoss, self).__init__()
-        self.max_levels = max_levels
         self.gauss_kernel = gauss_kernel(channels=channels)
 
-    def forward(self, input, target):
-        pyr_input  = laplacian_pyramid(img=input, kernel=self.gauss_kernel, max_levels=self.max_levels)
-        pyr_target = laplacian_pyramid(img=target, kernel=self.gauss_kernel, max_levels=self.max_levels)
+    def forward(self, input, target, max_levels):
+        pyr_input  = laplacian_pyramid(img=input, kernel=self.gauss_kernel, max_levels=max_levels)
+        pyr_target = laplacian_pyramid(img=target, kernel=self.gauss_kernel, max_levels=max_levels)
         return sum(torch.nn.functional.l1_loss(a, b) for a, b in zip(pyr_input, pyr_target))

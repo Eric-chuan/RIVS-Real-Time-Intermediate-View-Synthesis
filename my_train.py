@@ -9,7 +9,7 @@ import argparse
 import torch.distributed as dist
 
 from model.RIDE import Model
-from my_dataset import *
+from datasets.my_dataset import *
 from torch.utils.data import DataLoader, Dataset
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data.distributed import DistributedSampler
@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore")
 #     return 1e-4 * mul
 
 def get_learning_rate(step):
-    max_lr, min_lr = 5e-4, 5e-5
+    max_lr, min_lr = 1e-4, 6e-5
     if step < 6000:
         mul = step / 6000.
     else:
